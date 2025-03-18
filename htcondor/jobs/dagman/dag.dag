@@ -1,4 +1,0 @@
-JOB estimate /jobs/estimate_pi.sub
-
-SCRIPT PRE estimate /jobs/gen_seeds.py
-SCRIPT POST estimate /jobs/aggregate.py

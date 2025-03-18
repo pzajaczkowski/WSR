@@ -1,0 +1,4 @@
+JOB estimate /home/pdstudent/htcondor/jobs/estimate_pi.sub
+
+SCRIPT PRE estimate /home/pdstudent/htcondor/jobs/gen_seeds.py 1000000000 10 381294 results_10_1000000000
+SCRIPT POST estimate /home/pdstudent/htcondor/jobs/aggregate.py results_10_1000000000

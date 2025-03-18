@@ -1,6 +1,7 @@
 #include <iostream>
 #include <random>
 #include <iomanip>
+#include <chrono>
 
 using namespace std;
 
@@ -10,6 +11,8 @@ int main(int argc, char *argv[])
     {
         cerr << "Not enought arguments. Usage: " << argv[0] << " <Iterations> <Seed>" << std::endl;
     }
+
+    auto start = chrono::high_resolution_clock::now();
 
     long long num_points = stoll(argv[1]);
     long long seed = stoll(argv[2]);
@@ -28,7 +31,11 @@ int main(int argc, char *argv[])
         }
     }
 
-    cout << num_inside << std::endl << num_points << std::endl;
+    auto stop = chrono::high_resolution_clock::now();
+    auto duration = chrono::duration_cast<chrono::microseconds>(stop - start);
+
+    // time in microseconds
+    cout << num_inside << endl << num_points << endl << duration.count() << endl;
 
     return 0;
 }

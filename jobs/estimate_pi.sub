@@ -1,0 +1,7 @@
+Universe   = vanilla
+Executable = /jobs/estimate_pi
+Arguments  = $(iterations) $(seed)
+Output     = /jobs/results/result_$(Process).txt
+Error      = /jobs/results/result_$(Process).err
+Log        = /jobs/results/logs.log
+Queue iterations, seed from /jobs/params.txt   

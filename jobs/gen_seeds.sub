@@ -1,0 +1,7 @@
+Universe   = vanilla
+Executable = /usr/bin/python3
+Arguments  = /jobs/gen_seeds.py
+Output     = /jobs/gen_seeds.out
+Error      = /jobs/gen_seeds.err
+Log        = /jobs/gen_seeds.log
+Queue

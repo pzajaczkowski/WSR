@@ -1,0 +1,7 @@
+Universe   = vanilla
+Executable = /usr/bin/python3
+Arguments  = /jobs/aggregate.py
+Output     = /jobs/results/aggregate.out
+Error      = /jobs/results/aggregate.err
+Log        = /jobs/results/aggregate.log
+Queue 1

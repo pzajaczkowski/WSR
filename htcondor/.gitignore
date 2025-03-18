@@ -1,3 +1,6 @@
 # ignore compiled executable
 estimate-pi
 !estimate-pi.cpp
+
+dag_*
+results_*

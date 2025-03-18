@@ -7,16 +7,29 @@ fi
 
 INPUT_FILE=$1
 
-# Read the input file line by line
-while IFS=, read -r iter proc seed; do
-    DAG_FILE="dag_$(basename "$iter")_$(basename "$proc").dag"
-    OUT_FILE="results_$(basename "$iter")_$(basename "$proc")"
-    echo "# Generated DAG file" > "$DAG_FILE"
-    echo "JOB estimate /home/pdstudent/htcondor/jobs/estimate_pi.sub" >> "$DAG_FILE"
-    echo "SCRIPT PRE estimate /home/pdstudent/htcondor/jobs/gen_seeds.py $(basename "$iter") $(basename "$proc") $(basename "$seed") $OUT_FILE)" >> "$DAG_FILE"
-    echo "SCRIPT POST estimate /home/pdstudent/htcondor/jobs/aggregate.py $OUT_FILE" >> "$DAG_FILE"
-    echo "Executing the DAG file with Condor $DAG_FILE to $OUT_FILE"
-    condor_submit_dag "$DAG_FILE"
-done < "$INPUT_FILE"
+if [ ! -f "$INPUT_FILE" ]; then
+    echo "Error: Input file '$INPUT_FILE' not found."
+    exit 1
+fi
 
-echo "DAG execution complete."
+tail -n +2 "$INPUT_FILE" | while IFS=, read -r iter proc seed; do
+    iter=$(echo "$iter" | tr -d '[:space:]')
+    proc=$(echo "$proc" | tr -d '[:space:]')
+    seed=$(echo "$seed" | tr -d '[:space:]')
+
+    DAG_FILE="dag_${iter}_${proc}.dag"
+    OUT_FILE="results_${iter}_${proc}.txt"
+
+    echo "# Generated DAG file" > "$DAG_FILE"
+    echo "JOB estimate /jobs/estimate_pi.sub" >> "$DAG_FILE"
+    echo "SCRIPT PRE estimate /jobs/gen_seeds.py $iter $proc $seed $OUT_FILE" >> "$DAG_FILE"
+    echo "SCRIPT POST estimate /jobs/aggregate.py $OUT_FILE" >> "$DAG_FILE"
+
+    echo "Executing the DAG file with Condor: $DAG_FILE"
+    condor_submit_dag "$DAG_FILE"
+
+    echo "Waiting for DAG $DAG_FILE to complete..."
+    condor_wait "$DAG_FILE.dagman.log"
+done
+
+echo "All DAG executions complete."

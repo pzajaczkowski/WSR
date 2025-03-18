@@ -1,8 +1,0 @@
-JOB genSeeds /jobs/gen_seeds.sub
-
-JOB estimate /jobs/estimate_pi.sub
-
-JOB aggregate aggregate.sub
-
-PARENT genSeeds CHILD estimate
-PARENT estimate CHILD aggregate

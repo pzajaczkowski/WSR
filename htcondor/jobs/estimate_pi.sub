@@ -1,4 +1,5 @@
 Universe   = vanilla
+
 Executable = /jobs/estimate_pi
 Arguments  = $(iterations) $(seed)
 Output     = /jobs/results/result_$(Process).txt

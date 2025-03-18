@@ -18,12 +18,12 @@ tail -n +2 "$INPUT_FILE" | while IFS=, read -r iter proc seed; do
     seed=$(echo "$seed" | tr -d '[:space:]')
 
     DAG_FILE="dag_${iter}_${proc}.dag"
-    OUT_FILE="results_${iter}_${proc}.txt"
+    OUT_FOLDER="results_${iter}_${proc}"
 
     echo "# Generated DAG file" > "$DAG_FILE"
     echo "JOB estimate /jobs/estimate_pi.sub" >> "$DAG_FILE"
-    echo "SCRIPT PRE estimate /jobs/gen_seeds.py $iter $proc $seed $OUT_FILE" >> "$DAG_FILE"
-    echo "SCRIPT POST estimate /jobs/aggregate.py $OUT_FILE" >> "$DAG_FILE"
+    echo "SCRIPT PRE estimate /jobs/gen_seeds.py $iter $proc $seed $OUT_FOLDER" >> "$DAG_FILE"
+    echo "SCRIPT POST estimate /jobs/aggregate.py $OUT_FOLDER" >> "$DAG_FILE"
 
     echo "Executing the DAG file with Condor: $DAG_FILE"
     condor_submit_dag "$DAG_FILE"

@@ -19,7 +19,7 @@ for file in glob.glob(f"{results_dir}/result_*.txt"):
 
 with open(f"{results_dir}/final_result.txt", "w") as f:
     if total_points > 0:
-        f.write(f"{4 * total_inside / total_points}\n{total_cpu_time}")
+        f.write(f"{(4 * total_inside / total_points):.8f}\n{total_cpu_time}")
     else:
         f.write("Error: No results found.")
 

@@ -14,7 +14,7 @@ Then make sure to change user to be able to submit job:
 
 ```zsh
 su - submituser
-./execute.sh inputy.csv
+./execute.sh static-inputs.csv
 ```
 
 If permission denied execute following inside `/jobs` in container

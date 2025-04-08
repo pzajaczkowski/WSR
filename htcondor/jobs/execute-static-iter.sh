@@ -1,5 +1,7 @@
 #!/bin/bash
 
+WORK_DIR=""
+
 if [ $# -ne 1 ]; then
     echo "Usage: $0 <input_file>"
     exit 1
@@ -27,9 +29,9 @@ tail -n +2 "$INPUT_FILE" | while IFS=, read -r iter proc seed; do
     mkdir -p "$RESULT_FOLDER"
 
     echo "# Generated DAG file" > "$DAG_FILE"
-    echo "JOB estimate /jobs/estimate_pi.sub" >> "$DAG_FILE"
-    echo "SCRIPT PRE estimate /jobs/gen_seeds.py $iter $proc $seed $RESULT_FOLDER" >> "$DAG_FILE"
-    echo "SCRIPT POST estimate /jobs/aggregate.py $RESULT_FOLDER" >> "$DAG_FILE"
+    echo "JOB estimate $WORK_DIR/jobs/estimate_pi.sub" >> "$DAG_FILE"
+    echo "SCRIPT PRE estimate $WORK_DIR/jobs/gen_seeds.py $iter $proc $seed $RESULT_FOLDER" >> "$DAG_FILE"
+    echo "SCRIPT POST estimate $WORK_DIR/jobs/aggregate.py $RESULT_FOLDER" >> "$DAG_FILE"
 
     echo "Executing the DAG file with Condor: $DAG_FILE"
     start_time=$(date +%s%6N)

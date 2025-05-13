@@ -1,4 +1,5 @@
-logs = sc.textFile("/data/small.log")
+logs_path = "/data/small.log"
+logs = sc.textFile(logs_path)
 
 user = "bob"
 

@@ -1,8 +1,10 @@
 from pyspark.sql import SparkSession
 
+logs_path = "/data/small.log"
+
 spark = SparkSession.builder.appName("zad2").getOrCreate()
 
-logs = spark.read.csv("/data/small.log", sep="\t", inferSchema=True, header=False).toDF("host", "user", "col3", "col4", "col5", "time")
+logs = spark.read.csv(logs_path, sep="\t", inferSchema=True, header=False).toDF("host", "user", "col3", "col4", "col5", "time")
 
 logs.createOrReplaceTempView("logs")
 

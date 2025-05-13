@@ -1,4 +1,5 @@
-logs = sc.textFile("/data/small.log")
+logs_path = "/data/small.log"
+logs = sc.textFile(logs_path)
 
 lines_count = logs.count()
 bob_count = logs.filter(lambda line: line.split("\t")[1] == "bob").count()

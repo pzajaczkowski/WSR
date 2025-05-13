@@ -4,11 +4,15 @@ logs_path = "/data/small.log"
 
 spark = SparkSession.builder.appName("zad2").getOrCreate()
 
-logs = spark.read.csv(logs_path, sep="\t", inferSchema=True, header=False).toDF("host", "user", "col3", "col4", "col5", "time")
+logs = spark.read.csv(logs_path, sep="\t", inferSchema=True, header=False).toDF(
+    "host", "user", "col3", "col4", "col5", "time"
+)
 
 logs.createOrReplaceTempView("logs")
 
-user = 'bob'
+user = "bob"
+
+print(f"Łączne czasy operacji użytkownika {user} na każdym hoście:")
 
 query = f"""
     SELECT 
@@ -19,9 +23,4 @@ query = f"""
     GROUP BY host 
     ORDER BY total_time DESC
 """
-
-host_times = spark.sql(query).collect()
-
-print(f"Łączne czasy operacji użytkownika {user} na każdym hoście:")
-for row in host_times:
-    print(f"{row['host']}: {row['total_time']}")
+host_times = spark.sql(query).show()

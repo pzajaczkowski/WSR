@@ -27,5 +27,5 @@ percent_times = hosts_total_time.join(host_user_total_time).map(
 )
 
 print(f"Procent czasu operacji użytkownika {user} na każdym hoście:")
-for host, percent in percent_times.collect():
+for host, percent in sorted(percent_times.collect(), key=lambda x: x[1], reverse=True):
     print(f"{host}: {percent:.2f}%")

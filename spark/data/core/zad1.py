@@ -1,6 +1,9 @@
 logs_path = "/data/small.log"
 logs = sc.textFile(logs_path)
 
+# uncomment for second run
+# logs.cache()
+
 lines_count = logs.count()
 bob_count = logs.filter(lambda line: line.split("\t")[1] == "bob").count()
 alice_count = logs.filter(lambda line: line.split("\t")[1] == "alice").count()

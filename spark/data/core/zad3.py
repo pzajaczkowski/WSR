@@ -1,6 +1,9 @@
 logs_path = "/data/small.log"
 logs = sc.textFile(logs_path)
 
+# uncomment for second run
+# logs.cache()
+
 user = "bob"
 
 hosts_with_users_and_times = (

@@ -10,7 +10,7 @@ KAFKA_SERVER = os.getenv("KAFKA_SERVER")
 KAFKA_PORT = os.getenv("KAFKA_PORT")
 KAFKA_BROKER = f"{KAFKA_SERVER}:{KAFKA_PORT}"
 TOPIC = os.getenv("KAFKA_TOPIC_NAME")
-THRESHOLD = 50
+THRESHOLD = 80  # Threshold for high usage in percent
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
@@ -52,10 +52,10 @@ def process_metrics():
         if avg_mem > THRESHOLD:
             logger.warning(f"Cluster Memory usage is high: {avg_mem:.2f}%")
 
-        for node, node_data in node_metrics.items():
-            logger.info(
-                f"Node {node}: CPU {node_data['cpu_percent']}%, Memory {node_data['memory_percent']}%"
-            )
+        node_data = node_metrics[metrics["publisher"]]
+        logger.info(
+            f"Node {metrics['publisher']}: CPU {node_data['cpu_percent']:.2f}%, Memory {node_data['memory_percent']:.2f}%"
+        )
 
 
 if __name__ == "__main__":
